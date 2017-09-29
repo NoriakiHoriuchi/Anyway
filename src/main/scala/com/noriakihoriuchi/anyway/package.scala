@@ -4,7 +4,9 @@ import java.io.InputStream
 import java.util.concurrent.ExecutorService
 
 package object anyway {
-  def using[R, T](closeable: R)(f: R => T)(implicit closer: R => Unit): T =
+  type Closer[R] = R => Unit
+
+  def using[R, T](closeable: R)(f: R => T)(implicit closer: Closer[R]): T =
     try {
       f(closeable)
     } finally {
@@ -12,9 +14,9 @@ package object anyway {
     }
 
   object Closers {
-    implicit def inputStreamCloser: InputStream => Unit = is => is.close()
+    implicit def inputStreamCloser: Closer[InputStream] = is => is.close()
 
-    implicit def executorServiceCloser: ExecutorService => Unit =
+    implicit def executorServiceCloser: Closer[ExecutorService] =
       es => es.shutdown()
   }
 }
