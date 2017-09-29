@@ -1,8 +1,10 @@
 package com.noriakihoriuchi.anyway
 
 import java.io.{IOException, InputStream}
+import java.util.concurrent.Executors
 
 import org.scalatest.FlatSpec
+import Closers._
 
 class UsingTest extends FlatSpec {
 
@@ -28,5 +30,13 @@ class UsingTest extends FlatSpec {
     assert(is.available() == 0)
     using(is)(_ => ())
     assertThrows[IOException](is.available())
+  }
+
+  "ExecutorService" should "be closed" in {
+    val es = Executors.newCachedThreadPool()
+
+    assert(!es.isTerminated)
+    using(es)(_ => ())
+    assert(es.isTerminated)
   }
 }
