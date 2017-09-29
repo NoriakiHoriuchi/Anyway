@@ -4,7 +4,6 @@ import java.io.{IOException, InputStream}
 import java.util.concurrent.Executors
 
 import org.scalatest.FlatSpec
-import Closers._
 
 class UsingTest extends FlatSpec {
 

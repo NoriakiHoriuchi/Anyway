@@ -15,17 +15,14 @@ package object anyway {
       closer(closeable)
     }
 
-  object Closers {
+  implicit def closeableCloser: Closer[Closeable] = _.close()
 
-    type CloseMethodHolder[A] = A {
-      def close(): Unit
-    }
+  implicit def executorServiceCloser: Closer[ExecutorService] = _.shutdown()
 
-    implicit def closeMethodHolderCloser[A]: Closer[CloseMethodHolder[A]] =
-      _.close()
-
-    implicit def closeableCloser: Closer[Closeable] = _.close()
-
-    implicit def executorServiceCloser: Closer[ExecutorService] = _.shutdown()
+  type CloseMethodHolder[A] = A {
+    def close(): Unit
   }
+
+  implicit def closeMethodHolderCloser[A]: Closer[CloseMethodHolder[A]] =
+    _.close()
 }

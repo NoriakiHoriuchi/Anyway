@@ -7,8 +7,7 @@ coming soon
 ## usage
 
 ```
-import com.noriakihoriuchi.anyway.using
-import com.noriakihoriuchi.anyway.Closers._
+import com.noriakihoriuchi.anyway._
 
 
 class Resource {
