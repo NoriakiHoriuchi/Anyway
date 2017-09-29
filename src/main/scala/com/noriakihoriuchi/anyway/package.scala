@@ -14,9 +14,8 @@ package object anyway {
     }
 
   object Closers {
-    implicit def inputStreamCloser: Closer[InputStream] = is => is.close()
+    implicit def inputStreamCloser: Closer[InputStream] = _.close()
 
-    implicit def executorServiceCloser: Closer[ExecutorService] =
-      es => es.shutdown()
+    implicit def executorServiceCloser: Closer[ExecutorService] = _.shutdown()
   }
 }
