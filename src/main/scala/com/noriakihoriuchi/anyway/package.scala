@@ -3,6 +3,8 @@ package com.noriakihoriuchi
 import java.io.InputStream
 import java.util.concurrent.ExecutorService
 
+import scala.language.reflectiveCalls
+
 package object anyway {
   type Closer[R] = R => Unit
 
@@ -14,6 +16,14 @@ package object anyway {
     }
 
   object Closers {
+
+    type CloseMethodHolder[A] = A {
+      def close(): Unit
+    }
+
+    implicit def closeMethodHolderCloser[A]: Closer[CloseMethodHolder[A]] =
+      _.close()
+
     implicit def inputStreamCloser: Closer[InputStream] = _.close()
 
     implicit def executorServiceCloser: Closer[ExecutorService] = _.shutdown()

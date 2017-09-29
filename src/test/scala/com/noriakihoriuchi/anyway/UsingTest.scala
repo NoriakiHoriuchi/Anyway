@@ -39,4 +39,16 @@ class UsingTest extends FlatSpec {
     using(es)(_ => ())
     assert(es.isTerminated)
   }
+
+  "class which has simply close method" should "be closed" in {
+    class HasClose {
+      var isClosed: Boolean = false
+
+      def close(): Unit = { isClosed = true }
+    }
+    val instance = new HasClose()
+    assert(!instance.isClosed)
+    using(instance)(_ => ())
+    assert(instance.isClosed)
+  }
 }
