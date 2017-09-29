@@ -1,6 +1,6 @@
 package com.noriakihoriuchi
 
-import java.io.InputStream
+import java.io.Closeable
 import java.util.concurrent.ExecutorService
 
 import scala.language.reflectiveCalls
@@ -24,7 +24,7 @@ package object anyway {
     implicit def closeMethodHolderCloser[A]: Closer[CloseMethodHolder[A]] =
       _.close()
 
-    implicit def inputStreamCloser: Closer[InputStream] = _.close()
+    implicit def closeableCloser: Closer[Closeable] = _.close()
 
     implicit def executorServiceCloser: Closer[ExecutorService] = _.shutdown()
   }

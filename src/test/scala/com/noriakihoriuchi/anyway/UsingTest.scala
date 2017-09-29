@@ -8,7 +8,7 @@ import Closers._
 
 class UsingTest extends FlatSpec {
 
-  "InputStream" should "be closed" in {
+  "Closeable" should "be closed" in {
     val is = new InputStream() {
       var isClosed: Boolean = false
 
