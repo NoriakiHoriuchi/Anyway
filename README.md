@@ -6,16 +6,21 @@ coming soon
 
 ## usage
 
+when
+
 ```
-import com.noriakihoriuchi.anyway._
-
-
 class Resource {
   def close(): Unit = ???
 }
 
 
 val resource = new Resource
+```
+
+then
+
+```
+import com.noriakihoriuchi.anyway._
 
 
 using(resource) { res =>
